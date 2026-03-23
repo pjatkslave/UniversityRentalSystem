@@ -12,6 +12,7 @@ namespace UniversityRentalSystem_proj.Models
         public User Renter { get; set; }
         public Equipment RentedEquipment { get; set; }
         public DateTime RentalDate { get; set; }
+        public DateTime DueDate { get; set; }
         public DateTime? ReturnDate { get; set; }
         public decimal Penalty { get; set; }
         public Rental(int id, User renter, Equipment rentedEquipment, int rentalDays)
@@ -19,7 +20,8 @@ namespace UniversityRentalSystem_proj.Models
             Id = id;
             Renter = renter;
             RentedEquipment = rentedEquipment;
-            ReturnDate = RentalDate.AddDays(rentalDays);
+            RentalDate = DateTime.Now;
+            DueDate = RentalDate.AddDays(rentalDays);
         }
     }
 }

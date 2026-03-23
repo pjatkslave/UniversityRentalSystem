@@ -73,9 +73,9 @@ namespace UniversityRentalSystem.Services
             activeRental.ReturnDate = DateTime.Now;
             activeRental.RentedEquipment.IsAvailable = true;
 
-            if (activeRental.ReturnDate > activeRental.ReturnDate)
+            if (activeRental.ReturnDate > activeRental.DueDate)
             {
-                TimeSpan diff = activeRental.ReturnDate.Value - activeRental.RentalDate;
+                TimeSpan diff = activeRental.ReturnDate.Value - activeRental.DueDate;
                 int delayDays = diff.Days;
                 activeRental.Penalty = delayDays * DailyPenaltyRate;
             }
@@ -92,6 +92,38 @@ namespace UniversityRentalSystem.Services
                     break;
                 }
             }
+        }
+        public List<Rental> GetUserRentals(int userId)
+        {
+            List<Rental> userActive = new List<Rental>();
+            foreach (Rental r in _rentals)
+            {
+                if (r.Renter.Id == userId && r.ReturnDate == null)
+                {
+                    userActive.Add(r);
+                }
+            }
+            return userActive;
+        }
+        public List<Rental> GetOverdueRentals()
+        {
+            List<Rental> overdue = new List<Rental>();
+            DateTime now = DateTime.Now;
+            foreach (Rental r in _rentals)
+            {
+                if (r.ReturnDate == null && now > r.DueDate)
+                {
+                    overdue.Add(r);
+                }
+            }
+            return overdue;
+        }
+        public string GetSummary()
+        {
+            int total = _equipmentList.Count;
+            int avail = GetAvailableEquipment().Count;
+            int over = GetOverdueRentals().Count;
+            return "Total Equipment: " + total + ", Available: " + avail + ", Overdue: " + over;
         }
     }
 }
