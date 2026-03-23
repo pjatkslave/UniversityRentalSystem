@@ -56,5 +56,42 @@ namespace UniversityRentalSystem.Services
 
             selectedEquip.IsAvailable = false;
         }
+        public decimal Return(int equipmentId)
+        {
+            Rental activeRental = null;
+            foreach (Rental r in _rentals)
+            {
+                if (r.RentedEquipment.Id == equipmentId && r.ReturnDate == null)
+                {
+                    activeRental = r;
+                    break;
+                }
+            }
+
+            if (activeRental == null) throw new Exception("Active rental not found");
+
+            activeRental.ReturnDate = DateTime.Now;
+            activeRental.RentedEquipment.IsAvailable = true;
+
+            if (activeRental.ReturnDate > activeRental.ReturnDate)
+            {
+                TimeSpan diff = activeRental.ReturnDate.Value - activeRental.RentalDate;
+                int delayDays = diff.Days;
+                activeRental.Penalty = delayDays * DailyPenaltyRate;
+            }
+
+            return activeRental.Penalty;
+        }
+        public void SetUnavailable(int id)
+        {
+            foreach (Equipment e in _equipmentList)
+            {
+                if (e.Id == id)
+                {
+                    e.IsAvailable = false;
+                    break;
+                }
+            }
+        }
     }
 }
