@@ -11,7 +11,7 @@ namespace UniversityRentalSystem_proj.Models
         public string Laptop_Model {  get; set; }
         public string CPU { get; set; }
         public string RAM { get; set; }
-        public Laptop(string id, string name, string laptop_Model, string cpu, string ram) : base(id, name)
+        public Laptop(int id, string name, string laptop_Model, string cpu, string ram) : base(id, name)
         {
             Laptop_Model = laptop_Model;
             CPU = cpu;

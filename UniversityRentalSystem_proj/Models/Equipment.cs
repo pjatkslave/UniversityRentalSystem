@@ -8,11 +8,10 @@ namespace UniversityRentalSystem_proj.Models
 {
     public abstract class Equipment
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public bool IsAvailable { get; set; } = true;
-
-        protected Equipment(string id, string name)
+        protected Equipment(int id, string name)
         {
             Id = id;
             Name = name;

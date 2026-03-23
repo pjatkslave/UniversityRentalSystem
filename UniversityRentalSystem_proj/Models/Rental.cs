@@ -14,7 +14,7 @@ namespace UniversityRentalSystem_proj.Models
         public DateTime RentalDate { get; set; }
         public DateTime? ReturnDate { get; set; }
         public decimal Penalty { get; set; }
-        public Rental(int id, User renter, Equipment rentedEquipment, DateTime rentalDateб, int rentalDays)
+        public Rental(int id, User renter, Equipment rentedEquipment, int rentalDays)
         {
             Id = id;
             Renter = renter;

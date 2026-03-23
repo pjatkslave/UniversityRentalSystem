@@ -20,5 +20,41 @@ namespace UniversityRentalSystem.Services
         public List<Equipment> GetAllEquipment() => _equipmentList;
 
         public List<Equipment> GetAvailableEquipment() => _equipmentList.Where(e => e.IsAvailable).ToList();
+
+        public void Rent(int userId, int equipmentId, int days)
+        {
+            User selectedUser = null;
+            foreach (User u in _users)
+            {
+                if (u.Id == userId) { selectedUser = u; break; }
+            }
+            if (selectedUser == null) throw new Exception("User not found");
+
+            Equipment selectedEquip = null;
+            foreach (Equipment e in _equipmentList)
+            {
+                if (e.Id == equipmentId) { selectedEquip = e; break; }
+            }
+            if (selectedEquip == null) throw new Exception("Equipment not found");
+
+            if (selectedEquip.IsAvailable == false) throw new Exception("Equipment unavailable");
+
+            int activeCount = 0;
+            foreach (Rental r in _rentals)
+            {
+                if (r.Renter.Id == userId && r.ReturnDate == null)
+                {
+                    activeCount++;
+                }
+            }
+
+            if (activeCount >= selectedUser.Renal_Limit) throw new Exception("Limit exceeded");
+
+            int newId = _rentals.Count + 1;
+            Rental newRental = new Rental(newId, selectedUser, selectedEquip, days);
+            _rentals.Add(newRental);
+
+            selectedEquip.IsAvailable = false;
+        }
     }
 }

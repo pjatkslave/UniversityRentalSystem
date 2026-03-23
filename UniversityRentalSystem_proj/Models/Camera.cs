@@ -10,7 +10,7 @@ namespace UniversityRentalSystem_proj.Models
     {
         public string Resolution { get; set; }
         public string SensorSize { get; set; }
-        public Camera(string id, string name, string resolution, string sensorSize) : base(id, name)
+        public Camera(int id, string name, string resolution, string sensorSize) : base(id, name)
         {
             Resolution = resolution;
             SensorSize = sensorSize;

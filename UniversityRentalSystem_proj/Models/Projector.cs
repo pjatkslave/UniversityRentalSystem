@@ -11,7 +11,7 @@ namespace UniversityRentalSystem_proj.Models
         public string  Resolution { get; set; }
         public int WorkHours { get; set; }
 
-        public Projector(string id, string name, string resolution, int workHours) : base(id, name)
+        public Projector(int id, string name, string resolution, int workHours) : base(id, name)
         {
             Resolution = resolution;
             WorkHours = workHours;
