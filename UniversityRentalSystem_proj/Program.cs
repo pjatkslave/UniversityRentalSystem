@@ -69,6 +69,8 @@ namespace UniversityRentalSystem_proj
             }
             catch (Exception ex) { Console.WriteLine("Error: " + ex.Message); }
 
+            Console.WriteLine(service.GetSummary());
+
             Console.ReadLine();
         }
     }
